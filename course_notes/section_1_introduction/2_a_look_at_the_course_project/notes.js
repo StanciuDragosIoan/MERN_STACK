@@ -1,0 +1,3 @@
+/*
+    Presents us the app as it is
+*/
