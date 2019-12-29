@@ -1,0 +1,7 @@
+/*
+    Implementing JWT
+
+    continued in the users.js
+
+    implemented jwt
+*/
