@@ -7,6 +7,7 @@
 
         check code in routes/api/auth.js
     
-    
+        request to create or look for a profile we need the authentication 
+        token + content-type application/json
      
 */

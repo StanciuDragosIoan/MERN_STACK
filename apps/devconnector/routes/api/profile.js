@@ -104,12 +104,12 @@ router.get('/me', auth, async (req,res)=> {
             if (linkedin) profileFields.social.linkedin = linkedin;
             if (instagram) profileFields.social.instagram = instagram;
 
-            try{
+            try{    
 
                 //look for profile in the DB
                 let profile = await Profile.findOne({ user: req.user.id });
                 
-                //if found, updte it
+                //if found, update it
                 if(profile){
                     //update profile
                     profile = await Profile.findOneAndUpdate(
@@ -126,13 +126,14 @@ router.get('/me', auth, async (req,res)=> {
                         }
                     );
 
+                    //return the entire profile
                     return res.json(profile);
                 }
 
 
 
 
-                // if not found create new profile
+                // if not found Create new profile
                 profile = new Profile(profileFields);
 
                 await profile.save();
@@ -144,7 +145,30 @@ router.get('/me', auth, async (req,res)=> {
                 res.statis(500).send("Server error..");
             }
         }
+
 );
+
+
+
+
+    // @route   GET api/profile
+    // @desc    GET all profiles
+    // @access  Public
+
+    router.get('/', async (req,res) => {
+        try {
+            //get profile + name and avatar of the user
+           const profiles = await Profile.find().populate("user", ["name", "avatar"]);
+
+           res.json(profiles);
+        } catch(err){
+
+            console.error(err.message);
+            
+            res.status(500).send("Server error..");
+
+        }
+    });
 
 
 module.exports = router;
